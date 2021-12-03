@@ -93,7 +93,7 @@ setSlideIndex(slideIndex < 2 ? slideIndex +1 : 0);
             </Arrow>
             <Wrapper slideIndex={slideIndex}>
                 {sliderItems.map((item => (
-                    <Slide bg={item.bg}>
+                    <Slide bg={item.bg} key={item.id}>
                         <ImageContainer>
                             <Image src={item.img} />
                         </ImageContainer>
