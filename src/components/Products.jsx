@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 import Product from "./Product";
 import axios from "axios";
 
@@ -24,7 +23,7 @@ const Products = ({ cat, filters, sort }) => {
             : "http://localhost:5000/api/products"
         );
         setProducts(res.data);
-      } catch (error) {}
+      } catch (err) {}
     };
     getProducts();
   }, [cat]);

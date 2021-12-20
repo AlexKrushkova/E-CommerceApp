@@ -1,13 +1,13 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
-import Announcement from "../component/Announcement";
-import Footer from "../component/Footer";
-import Navbar from "../component/Navbar";
-import Newsletter from "../component/Newsletter";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
-import { publicRequest } from "../requestMethod";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
 
@@ -78,6 +78,7 @@ const FilterColor = styled.div`
 
 const FilterSize = styled.select`
   margin-left: 10px;
+  padding: 5px;
 `;
 
 const FilterSizeOption = styled.option``;
@@ -132,7 +133,7 @@ const Product = () => {
       try {
         const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
-      } catch (err) {}
+      } catch {}
     };
     getProduct();
   }, [id]);
@@ -146,12 +147,14 @@ const Product = () => {
   };
 
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    dispatch(
+      addProduct({ ...product, quantity, color, size })
+    );
   };
   return (
     <Container>
-      <Announcement />
       <Navbar />
+      <Announcement />
       <Wrapper>
         <ImgContainer>
           <Image src={product.img} />
@@ -171,7 +174,7 @@ const Product = () => {
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
-                  <FilterSizeOption size={s}>{s}</FilterSizeOption>
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>
